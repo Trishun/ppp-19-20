@@ -70,4 +70,47 @@ Przykładowy wyciąg z serwera w trakcie realizowania operacji:
 
 ### Tetris
 
-Aplikacja powstała w oparciu o bibliotekę pyGame 1.9.6
+Aplikacja powstała w oparciu o bibliotekę pyGame 1.9.6. Jest to odwzorowanie klasycznej wersji gry.
+Ekran składa się z planszy 9x14 kwadratów, w których umieszcza się opadające figury.
+W prawej części widnieje liczba punktów, oraz mała plansza 4x4 wyświetlająca informację o
+kolejnym elemencie i jego ułożeniu
+Celem gry jest zapełnienie rzędu, który to zostaje wymazany, a to, co nad nim obniżone.
+Za operację wyczyszczenia rzędu gracz otrzymuje 100 punktów.
+Gra kończy się, gdy nie ma możliwości wstawienia kolejnego elementu.
+
+Punktacja uwzględnia bonusy za wymazanie więcej niż jednego rzędu przy jednym ruchu.
+Obliczenia są prowadzone według wzoru:
+`(l.rzędów)! * 100`
+
+Ekran rozpoczynający rozgrywkę wygląda następująco:
+
+![tetris1](img/tetris1.png)
+
+Jak widać na kolejnej ilustracji, poruszający się klocek jest koloru niebieskiego, natomiast te już ustawione
+są koloru jasnobeżowego.
+
+![tetris2](img/tetris2.png)
+
+Usunięcie dwóch rzędów spowodowało obniżenie pozostałych o dwie kratki:
+
+![tetris3](img/tetris3.png)
+
+Ekran na zakończenie gry:
+
+![tetris4](img/tetris4.png)
+
+##### Mechanika gry
+
+Wyświetlany obraz jest tworzony na podstawie istniejących w pamięci macierzy z pakietu numpy.
+
+Macierze te uwzględniają planszę oraz poruszające się po niej elementy.
+Bazową macierzą jest plansza gry. Składają się na nią 0 - brak klocka i 1 - obecność klocka.
+Każdy ruch składa się z kilku kroków:
+1. pobranie kopii macierzy,
+2. wstawienie elementu (reprezentowanego poprzez macierz 0 - brak klocka i 2 - obecność klocka) w zadane współrzędne,
+3. oczekiwanie na działanie użytkownika określającego kolejny ruch,
+4. przechwycenie kierunku lub ustawienie domyślnego - dół
+5. sprawdzenie kierunku - czy jest możliwe przemieszczenie elementu, tj. czy macierz bazowa zawiera 0 w miejscach gdzie znajdzie się element,
+6. przemieszczenie lub zabronienie przemieszczenia w przypadku kierunków bocznych, przemieszczenie lub dołączenie do istniejącej struktury (wstawienie w miejsce 2 liczb 1) w przypadku kierunku domyślnego a następnie nadpisanie macierzy podstawowej.
+
+
